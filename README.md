@@ -8,7 +8,7 @@ Python SDK currently supports
 * [Slack](http://docs.botanalytics.apiary.io/)
 * [Generic](http://docs.botanalytics.apiary.io/)
 
-If you want to use nodejs instead checkout [Botanalytics NodeJs SDK](https://github.com/Botanalyticsco/botanalytics)
+If you want to use nodejs instead, checkout [Botanalytics NodeJs SDK](https://github.com/Botanalyticsco/botanalytics)
 
 ## Setup
 
