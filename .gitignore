@@ -2,3 +2,6 @@
 junk.py
 test.py
 **/*.pyc
+dist/
+build/
+botanalytics.egg-info/

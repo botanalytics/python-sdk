@@ -78,7 +78,9 @@ class AmazonAlexaLambda(Envoy):
         :param token: str
             Botanalytics token
         :param base_url: str
-            Error callback function of format (err, reason, payload)
+
+        :param async_logging : bool
+            Log async
         """
         super(AmazonAlexaLambda, self).__init__(debug, token, base_url)
         self.__path = 'messages/amazon-alexa/'
