@@ -5,6 +5,7 @@ Python SDK currently supports
 
 * [Google Assistant](http://docs.botanalytics.apiary.io/)
 * [Amazon Alexa](http://docs.botanalytics.apiary.io/)
+* [Facebook](http://docs.botanalytics.apiary.io/)
 * [Slack](http://docs.botanalytics.apiary.io/)
 * [Generic](http://docs.botanalytics.apiary.io/)
 
@@ -23,6 +24,7 @@ pip install botanalytics
 ##### Google Assistant
 ```python
 from botanalytics.google import GoogleAssistant, GoogleAssistantCloudFunctions
+import os
 
 # Optional callback function, if you specify it, you can handle failed
 #  attemps the way you want
@@ -45,6 +47,7 @@ botanalytics_gc.log(request_payload, response_payload)
 ##### Amazon Alexa
 ```python
 from botanalytics.amazon import AmazonAlexa, AmazonAlexaLambda
+import os
 
 # Optional callback function, if you specify it, you can handle failed
 #  attemps the way you want
@@ -64,9 +67,90 @@ botanalytics_aal.log(request_payload, response_payload)
 
 ```
 
+##### Facebook
+```python
+from botanalytics.facebook import FacebookMessenger
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib.parse import parse_qs
+import requests
+import os
+
+# Optional callback function, if you specify it, you can handle failed
+#  attemps the way you want
+def err_callback(err, reason, payload):
+    pass
+
+botanalytics_token = os.environ['BOTANALYTICS_API_TOKEN']
+fb_page_token = os.environ["FACEBOOK_PAGE_TOKEN"]
+# Debug(optional)->bool, token(required)->str, fb_token(optional)-> str,
+# callback(optional)->function
+botanalytics = FacebookMessenger(
+                        debug=True,
+                        token=botanalytics_token,
+                        fb_token=fb_page_token,
+                        callback=err_callback)
+
+class BasicRequestHandler(BaseHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super(ServerHandler, self).__init__(*args, **kwargs)
+
+    def do_POST(self):
+        if self.path == '/webhook/facebook':
+            print('Incoming facebook message')
+            self.handle_facebook_message()
+        else:
+            # Handle your paths
+
+    def handle_facebook_message(self):
+        request_body = str(self.rfile.read(int(self.headers['content-length'])), 'utf-8')
+        message_payload = json.loads(request_body)
+        #log incoming message
+        botanalytics.log_incoming(message_payload)
+
+        for entry in message_payload['entry']:
+            page_id = entry['id']
+            message_time = entry['time']
+            for event in entry['messaging']:
+                sender_id = event['sender']['id']
+                message_to_build= {}
+
+                #
+                # Handle your event and build your message
+                #
+
+                # log outgoing message
+                botanalytics.log_outgoing(message_to_build, sender_id)
+
+                # send your message
+                response_message = {
+                    "recipient": {"id":sender_id},
+                    "message": message_to_build,
+                }
+                requests.post('https://graph.facebook.com/v2.6/me/messages?access_token='+fb_page_token,
+                             json = response message)
+
+        self.send_response(200)
+
+def run(server_class=HTTPServer, handler_class=BasicRequestHandler, port=8000):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print('Starting httpd...')
+    try:
+        httpd.serve_forever()
+    except BaseException as ki:
+        print(str(ki))
+
+
+if __name__ == "__main__":
+    run()
+
+```
+
+
 ##### Generic
 ```python
 from botanalytics.generic import Generic
+import os
 
 # Optional callback function, if you specify it, you can handle failed
 #  attemps the way you want
@@ -84,6 +168,7 @@ botanalytics.log(message)
 ```python
 from botanalytics.slack import SlackRTMApi
 from slackclient import SlackClient
+import os
 
 sc = SlackClient(os.environ["SLACK_API_TOKEN"])
 
