@@ -20,9 +20,9 @@ class Generic(Envoy):
         self._inform("Logging enabled for Generic...")
         self.__async = async
         if self.__async:
-            self.__number_of_workers = multiprocessing.cpu_count()
+            self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:
-                self.__number_of_workers = 3
+                self.__number_of_workers = 2
             self.__executor_service = ThreadPoolExecutor(max_workers=self.__number_of_workers)
             self._inform("Mode: Async...")
 

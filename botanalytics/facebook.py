@@ -23,7 +23,7 @@ class FacebookMessenger(Envoy):
         self.__async = async
         self._inform("Debugging enabled for Facebook...")
         if self.__async:
-            self.__number_of_workers = multiprocessing.cpu_count()
+            self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:
                 self.__number_of_workers = 2
             self.__executor_service = ThreadPoolExecutor(max_workers=self.__number_of_workers)

@@ -162,10 +162,10 @@ class SlackEventApi(Envoy):
         self._inform('Logging enabled for SlackEventApi...')
         self.__async = async
         if self.__async:
-            self.__number_of_workers = multiprocessing.cpu_count()
+            self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:
                 # +1 for initialize update
-                self.__number_of_workers = 3
+                self.__number_of_workers = 2
             self.__executor_service = ThreadPoolExecutor(max_workers=self.__number_of_workers)
             self.__executor_service.submit(self.__initialize)
             self._inform("Mode: Async...")

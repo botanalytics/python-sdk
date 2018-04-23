@@ -158,8 +158,7 @@ class Envoy(object):
                     self._inform('Successfully logged message(s)...')
                 return True
             else:
-                response = r.json()
-                self._fail(BaseException('Message(s) can not be logged!'), response['error_message'], parchment)
+                self._fail(BaseException('Message(s) can not be logged!'), r.json(), parchment)
                 return False
         except BaseException as e:
             self._fail(e, '', parchment)
