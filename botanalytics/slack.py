@@ -70,7 +70,7 @@ class SlackRTMApi(Envoy):
         :return:
         """
         if self.__active_team_id is None or self.__active_user_id is None:
-            self._fail(BaseException('team and bot'), 'Not initialized yet...')
+            self._fail(BaseException('Team and Bot info is missing!'), 'Not initialized yet...')
             return
 
         validation = self.__validate(payload)
@@ -90,7 +90,7 @@ class SlackRTMApi(Envoy):
     def log_outgoing(self, channel, message, thread=None, reply_broadcast=None, msg_payload=None):
 
         if self.__active_team_id is None or self.__active_user_id is None:
-            self._fail(BaseException('Team and Bot is unknown.'), 'Not initialized yet...')
+            self._fail(BaseException('Team and Bot info is missing!'), 'Not initialized yet...')
             return
 
         if msg_payload is not None:
