@@ -23,8 +23,8 @@ class SlackRTMApi(Envoy):
         super(SlackRTMApi, self).__init__(debug=debug, token=token, base_url=base_url, callback=callback)
         self.__path = 'messages/slack/'
         self.__initialize_path = 'bots/slack/initialize/'
-        self.__activeUserId = None
-        self.__activeTeamId = None
+        self.__active_user_id= None
+        self.__active_team_id = None
         if slack_client_instance is None:
             raise ValueError('Slack instance is not provided!')
         self.__slack_client = slack_client_instance
@@ -51,8 +51,8 @@ class SlackRTMApi(Envoy):
                         time.sleep(wait_interval)
                         wait_interval += 3
                         continue
-                    self.__activeUserId = data['self']['id']
-                    self.__activeTeamId = data['team']['id']
+                    self.__active_user_id = data['self']['id']
+                    self.__active_team_id = data['team']['id']
                     if not self._submit(data, self.__initialize_path, "Successfully updated bot '{}' info...".format(data['self']['name'])):
                         time.sleep(wait_interval)
                         wait_interval += 3
@@ -69,15 +69,15 @@ class SlackRTMApi(Envoy):
 
         :return:
         """
-        if self.__activeTeamId is None or self.__activeUserId is None:
-            self._fail(BaseException('team and bot'), 'Missing info')
+        if self.__active_team_id is None or self.__active_user_id is None:
+            self._fail(BaseException('team and bot'), 'Not initialized yet...')
             return
 
         validation = self.__validate(payload)
         if validation['ok']:
             self._inform('Logging message...')
             payload['is_bot'] = False
-            payload['team'] = self.__activeTeamId
+            payload['team'] = self.__active_team_id
             self._inform(payload)
             if self.__async:
                 self.__executor_service.submit(self._submit, payload, self.__path)
@@ -89,8 +89,8 @@ class SlackRTMApi(Envoy):
 
     def log_outgoing(self, channel, message, thread=None, reply_broadcast=None, msg_payload=None):
 
-        if self.__activeTeamId is None or self.__activeUserId is None:
-            self._fail(BaseException('team and bot'), 'Missing info')
+        if self.__active_team_id is None or self.__active_user_id is None:
+            self._fail(BaseException('Team and Bot is unknown.'), 'Not initialized yet...')
             return
 
         if msg_payload is not None:
@@ -103,8 +103,8 @@ class SlackRTMApi(Envoy):
             if validation['ok']:
                 msg['is_bot'] = True
                 msg['ts'] = str(int(time.time() * 1000) / 1000)
-                msg['team'] = self.__activeTeamId
-                msg['user'] = self.__activeUserId
+                msg['team'] = self.__active_team_id
+                msg['user'] = self.__active_user_id
                 self._inform('Logging message...')
                 self._inform(msg)
                 if self.__async:
@@ -124,8 +124,8 @@ class SlackRTMApi(Envoy):
                 payload['reply_broadcast'] = True
         payload['is_bot'] = True
         payload['ts'] = str(int(time.time()*1000)/1000)
-        payload['team'] = self.__activeTeamId
-        payload['user'] = self.__activeUserId
+        payload['team'] = self.__active_team_id
+        payload['user'] = self.__active_user_id
         self._inform('Logging message...')
         self._inform(payload)
         if self.__async:
@@ -186,8 +186,6 @@ class SlackEventApi(Envoy):
                         time.sleep(wait_interval)
                         wait_interval += 3
                         continue
-                    self.__activeUserId = data['self']['id']
-                    self.__activeTeamId = data['team']['id']
                     if not self._submit(data, self.__initialize_path, "Successfully updated bot '{}' info...".format(data['self']['name'])):
                         time.sleep(wait_interval)
                         wait_interval += 3
