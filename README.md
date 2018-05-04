@@ -3,11 +3,11 @@
 Python SDK currently supports
 
 
-* [Google Assistant](http://docs.botanalytics.apiary.io/)
-* [Amazon Alexa](http://docs.botanalytics.apiary.io/)
-* [Facebook](http://docs.botanalytics.apiary.io/)
-* [Slack](http://docs.botanalytics.apiary.io/)
-* [Generic](http://docs.botanalytics.apiary.io/)
+* [Google Assistant](https://botanalytics.co/docs#google-assistant)
+* [Amazon Alexa](https://botanalytics.co/docs#amazon-alexa)
+* [Facebook](https://botanalytics.co/docs#facebook-messenger)
+* [Slack](https://botanalytics.co/docs#slack)
+* [Generic](https://botanalytics.co/docs#generic)
 
 If you want to use nodejs instead, checkout [Botanalytics Node.js SDK](https://github.com/Botanalyticsco/botanalytics)
 
@@ -319,4 +319,4 @@ if __name__ == "__main__":
     run()
 
 ```
-Follow the instructions at [http://docs.botanalytics.apiary.io/](http://docs.botanalytics.apiary.io/)
+Follow the instructions at [https://botanalytics.co/docs](https://botanalytics.co/docs)
