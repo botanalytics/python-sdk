@@ -200,31 +200,34 @@ botanalytics.log(message)
 ```
 
 ##### Rasa
+
 There are two options to integrate Rasa with Botanalytics
 
-OPTION 1: Endpoints.yml
+**OPTION 1: Endpoints.yml**
 
-##### Add Botanalytics to your endpoints.yml
+**Add Botanalytics to your endpoints.yml**
 
 Add a line to your endpoints.yml so that rasa-core is configured to send events to Botanalytics:
+
+```yaml
+event_broker:
+    type: botanalytics.rasa.Rasa
+    api_token: BOTANALYTICS_TOKEN
+    debug: true
 ```
-  event_broker:
-        type:  botanalytics.rasa.Rasa
-        api_token:  BOTANALYTICS_TOKEN
-        debug:  true
-```
-OPTION 2: Event Broker
-##### Include Botanalytics
+**OPTION 2: Event Broker**
+**Include Botanalytics**
 ```python
 from botanalytics.rasa import Rasa
 ```
-##### Consume events with Botanalytics
+**Consume events with Botanalytics**
 ```python
 
 def _callback(ch, method, properties, body):
     event = json.loads(body)
     db = Rasa(token=os.environ['BOTANALYTICS_TOKEN'])
     db.publish(event)
+
 ```
 
 ##### SlackRTMApi

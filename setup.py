@@ -6,6 +6,7 @@ setup(
     version = '0.2.6',
     description = 'Conversational analytics & engagement tool for chatbots',
     long_description = readme,
+    long_description_content_type='text/markdown',
     url = 'https://github.com/Botanalyticsco/botanalytics-python',
     author = 'Enis Gayretli',
     author_email = 'tech@botanalytics.co',
