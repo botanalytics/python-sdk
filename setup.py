@@ -3,11 +3,11 @@ readme = open("README.md","r").read()
 
 setup(
     name = 'botanalytics',
-    version = '0.2.5',
+    version = '0.2.6',
     description = 'Conversational analytics & engagement tool for chatbots',
     long_description = readme,
     url = 'https://github.com/Botanalyticsco/botanalytics-python',
-    author = 'Beyhan Esen',
+    author = 'Enis Gayretli',
     author_email = 'tech@botanalytics.co',
     license = 'MIT',
     classifiers = [
