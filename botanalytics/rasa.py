@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 class Rasa(Envoy):
 
-    def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
+    def __init__(self, debug=False, token=None, base_url='http://localhost:8080/v1/',
                  callback=None, async = False):
         """
         :param debug: bool
@@ -41,6 +41,7 @@ class Rasa(Envoy):
             self.__executor_service.submit(self._submit, payload, self.__path)
         else:
             self._submit(payload, self.__path)
+            
 
 
 
@@ -55,11 +56,11 @@ class Rasa(Envoy):
     def publish(self, event):
         if event['event'] == 'user':
             if event['sender_id'] in self.last_slot_dict:
-                event['slots'] = [self.last_slot_dict[event['sender_id']]] 
+                event['slot'] = self.last_slot_dict[event['sender_id']] 
                 self.last_slot_dict.pop(event['sender_id'], None)
             self.log(event)
         elif event['event'] == 'bot':
-            if event['sender_id'] in self.last_action_dict :
+            if event['sender_id'] in self.last_action_dict:
                 event['action'] = self.last_action_dict[event['sender_id']]
                 self.last_action_dict.pop(event['sender_id'], None)
             self.log(event)
