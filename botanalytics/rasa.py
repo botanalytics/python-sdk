@@ -5,7 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 class Rasa(Envoy):
 
-    def __init__(self, debug=False, token=None, base_url='http://localhost:8080/v1/',
+    def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
                  callback=None, async = False):
         """
         :param debug: bool

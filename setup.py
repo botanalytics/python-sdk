@@ -3,7 +3,7 @@ readme = open("README.md","r").read()
 
 setup(
     name = 'botanalytics',
-    version = '0.2.7',
+    version = '0.2.8',
     description = 'Conversational analytics & engagement tool for chatbots',
     long_description = readme,
     long_description_content_type='text/markdown',
