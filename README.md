@@ -36,22 +36,22 @@ def err_callback(err, reason, payload):
     pass
 
 # Debug(optional)->bool, token(required)->str,
-# callback(optional)->function, async(optional)-> bool
+# callback(optional)->function, is_async(optional)-> bool
 botanalytics = GoogleAssistant(
                 debug=True,
                 token=os.environ['BOTANALYTICS_API_TOKEN'],
                 callback=err_callback,
-                async=True
+                is_async=True
                 )
 # request_payload -> dict, response_payload -> dict
 botanalytics.log(request_payload, response_payload)
 
 # For Google Cloud Functions
-# Debug(optional)->bool, token(required)->str, async(optional)->bool
+# Debug(optional)->bool, token(required)->str, is_async(optional)->bool
 botanalytics_gc = GoogleAssistantCloudFunctions(
                     debug=True,
                     token=os.environ['BOTANALYTICS_API_TOKEN'],
-                    async=True)
+                    is_async=True)
 # request_payload->dict, response_payload->dict
 botanalytics_gc.log(request_payload, response_payload)
 
@@ -68,21 +68,21 @@ def err_callback(err, reason, payload):
     pass
 
 # Debug(optional)->bool, token(required)->str,
-# callback(optional)->function, async(optional)-> bool
+# callback(optional)->function, is_async(optional)-> bool
 botanalytics = AmazonAlexa(
                     debug=True,
                     token=os.environ['BOTANALYTICS_API_TOKEN'],
                     callback=err_callback,
-                    async=True)
+                    is_async=True)
 # request_payload -> dict, response_payload -> dict
 botanalytics.log(request_payload, response_payload)
 
 # For lambda
-# Debug(optional)->bool, token(required)->str, async(optional)->bool
+# Debug(optional)->bool, token(required)->str, is_async(optional)->bool
 botanalytics_aal = AmazonAlexaLambda(
                         debug=True,
                         token=os.environ['BOTANALYTICS_API_TOKEN'],
-                        async=True)
+                        is_async=True)
 # request_payload->dict, response_payload->dict
 botanalytics_aal.log(request_payload, response_payload)
 
@@ -105,13 +105,13 @@ def err_callback(err, reason, payload):
 botanalytics_token = os.environ['BOTANALYTICS_API_TOKEN']
 fb_page_token = os.environ["FACEBOOK_PAGE_TOKEN"]
 # Debug(optional)->bool, token(required)->str, fb_token(optional)-> str,
-# callback(optional)->function, async(optional)-> bool
+# callback(optional)->function, is_async(optional)-> bool
 botanalytics = FacebookMessenger(
                         debug=True,
                         token=botanalytics_token,
                         fb_token=fb_page_token,
                         callback=err_callback,
-                        async=True
+                        is_async=True
                         )
 
 class BasicRequestHandler(BaseHTTPRequestHandler):
@@ -188,12 +188,12 @@ def err_callback(err, reason, payload):
     pass
 
 # Debug(optional)->bool, token(required)->str,
-# callback(optional)->function, async(optional)-> bool
+# callback(optional)->function, is_async(optional)-> bool
 botanalytics = Generic(
                     debug=True,
                     token=os.environ['BOTANALYTICS_API_TOKEN'],
                     callback=err_callback,
-                    async=True)
+                    is_async=True)
 # message -> dict
 botanalytics.log(message)
 
@@ -245,12 +245,12 @@ def err_callback(err, reason, payload):
 
 # Debug(optional)->bool, token(required)->str,
 # slack_client_instance(required)-> SlackClient,
-# callback(optional)->function, async(optional)-> bool
+# callback(optional)->function, is_async(optional)-> bool
 botanalytics = SlackRTMApi(
                      debug=True,
                      token=os.environ['BOTANALYTICS_API_TOKEN'],
-                     slack_client_instance=sc, callback=err_callback
-                     async=True
+                     slack_client_instance=sc, callback=err_callback,
+                     is_async=True
                      )
 if sc.rtm_connect():
   while sc.server.connected is True:
@@ -283,13 +283,13 @@ def err_callback(err, reason, payload):
 
 # Debug(optional)->bool, token(required)->str,
 # slack_token(required)-> str, callback(optional)->function
-# async(optional)-> bool
+# is_async(optional)-> bool
 botanalytics = SlackEventApi(
                  debug=True,
                  token=os.environ['BOTANALYTICS_API_TOKEN'],
                  slack_token=os.environ["SLACK_API_TOKEN"],
                  callback=err_callback,
-                 async=True
+                 is_async=True
                  )
 
 class BasicRequestHandler(BaseHTTPRequestHandler):
