@@ -6,7 +6,7 @@ import multiprocessing
 class GoogleAssistant(Envoy):
 
     def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
-                 callback=None, async = False):
+                 callback=None, is_async=False):
         """
         :param debug: bool
             (default False)
@@ -19,7 +19,7 @@ class GoogleAssistant(Envoy):
         super(GoogleAssistant, self).__init__(debug, token, base_url, callback)
         self.__path = 'messages/google-assistant/'
         self._inform("Logging enabled for GoogleAssistant...")
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:
@@ -87,7 +87,7 @@ class GoogleAssistant(Envoy):
 class GoogleAssistantCloudFunctions(Envoy):
 
     def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
-                 async=False):
+                 is_async=False):
         """
         :param debug: bool
             (default False)
@@ -100,7 +100,7 @@ class GoogleAssistantCloudFunctions(Envoy):
         super(GoogleAssistantCloudFunctions, self).__init__(debug, token, base_url)
         self.__path = 'messages/google-assistant/'
         self._inform("Logging enabled for GoogleAssistant...")
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self._inform("Mode: Async...")
 

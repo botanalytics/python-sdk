@@ -8,7 +8,7 @@ import threading
 class AmazonAlexa(Envoy):
 
     def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
-                 callback=None, async=False):
+                 callback=None, is_async=False):
         """
         :param debug: bool
             (default False)
@@ -21,7 +21,7 @@ class AmazonAlexa(Envoy):
         super(AmazonAlexa, self).__init__(debug, token, base_url, callback)
         self.__path = 'messages/amazon-alexa/'
         self._inform("Logging enabled for AmazonAlexa...")
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:
@@ -77,7 +77,7 @@ class AmazonAlexa(Envoy):
 class AmazonAlexaLambda(Envoy):
 
     def __init__(self, debug=False, token=None, base_url='https://api.botanalytics.co/v1/',
-                 async=False):
+                 is_async=False):
         """
         :param debug: bool
             (default False)
@@ -92,7 +92,7 @@ class AmazonAlexaLambda(Envoy):
         self.__path = 'messages/amazon-alexa/'
         self._inform("Logging enabled for AmazonAlexa...")
         self.__number_of_workers = multiprocessing.cpu_count()
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self._inform("Mode: Async...")
 

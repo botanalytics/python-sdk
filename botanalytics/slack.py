@@ -8,7 +8,7 @@ import threading
 
 class SlackRTMApi(Envoy):
     def __init__(self, debug=False, token=None, slack_client_instance=None, base_url='https://api.botanalytics.co/v1/',
-                 callback=None, async=False):
+                 callback=None, is_async=False):
         """
         :param debug: bool
             Enables logging
@@ -29,7 +29,7 @@ class SlackRTMApi(Envoy):
             raise ValueError('Slack instance is not provided!')
         self.__slack_client = slack_client_instance
         self._inform('Logging enabled for SlackRTMApi...')
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self.__executor_service = ThreadPoolExecutor(max_workers=2)
             self.__executor_service.submit(self.__initialize)
@@ -140,7 +140,7 @@ class SlackRTMApi(Envoy):
 
 class SlackEventApi(Envoy):
     def __init__(self, debug=False, token=None, slack_token=None, base_url='https://api.botanalytics.co/v1/',
-                 callback=None, async = False):
+                 callback=None, is_async=False):
         """
         :param debug: bool
             Enables logging
@@ -160,7 +160,7 @@ class SlackEventApi(Envoy):
             raise ValueError('Slack token is not provided!')
         self.__slack_token = slack_token
         self._inform('Logging enabled for SlackEventApi...')
-        self.__async = async
+        self.__async = is_async
         if self.__async:
             self.__number_of_workers = multiprocessing.cpu_count() * 2
             if self.__number_of_workers == 0:

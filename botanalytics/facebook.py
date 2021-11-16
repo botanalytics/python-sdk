@@ -4,7 +4,7 @@ import multiprocessing
 import time
 
 class FacebookMessenger(Envoy):
-    def __init__(self, debug=False, token=None, fb_token=None, base_url='https://api.botanalytics.co/v1/', callback=None, async = False):
+    def __init__(self, debug=False, token=None, fb_token=None, base_url='https://api.botanalytics.co/v1/', callback=None, is_async=False):
         """
         :param debug: bool
             To enable logging
@@ -20,7 +20,7 @@ class FacebookMessenger(Envoy):
         self.__fb_token = fb_token
         self.__path = "messages/facebook-messenger/"
         self.__profile_path = "facebook-messenger/users/"
-        self.__async = async
+        self.__async = is_async
         self._inform("Debugging enabled for Facebook...")
         if self.__async:
             self.__number_of_workers = multiprocessing.cpu_count() * 2
