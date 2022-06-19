@@ -1,6 +1,5 @@
 .idea
-junk.py
-test.py
+env/
 **/*.pyc
 dist/
 build/
