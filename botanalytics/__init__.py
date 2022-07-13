@@ -127,7 +127,7 @@ class Base:
         self.debug = bool(util.strtobool(os.getenv('BA_DEBUG'))) if debug is None else debug
         self.is_async = bool(util.strtobool(os.getenv('BA_IS_ASYNC'))) if is_async is None else is_async
         self.channel = channel
-        self.thread_workers = thread_workers
+        self.thread_workers = int(os.getenv('BA_THREAD_WORKERS')) if thread_workers is None else int(thread_workers)
         self.api_key = os.getenv('BA_API_KEY') if api_key is None else api_key
         self.base_url = (default_base_url if os.getenv('BA_BASE_URL') is None else os.getenv('BA_BASE_URL')) \
             if base_url is None else base_url
