@@ -2,7 +2,9 @@ import os
 import re
 import sys
 import json
+import toml
 import base64
+import pathlib
 import pkg_resources
 import multiprocessing
 from loguru import logger
@@ -15,19 +17,15 @@ from requests_toolbelt import sessions
 from requests.adapters import HTTPAdapter
 from concurrent.futures import ThreadPoolExecutor
 
-if 'unittest' in sys.modules.keys():
 
-    import toml
-    import pathlib
+pyproject_text = pathlib.Path('pyproject.toml').read_text()
+pyproject_data = toml.loads(pyproject_text)
 
-    pyproject_text = pathlib.Path('pyproject.toml').read_text()
-    pyproject_data = toml.loads(pyproject_text)
-
+if 'poetry' in pyproject_data['tool']:
     __version__ = pyproject_data['tool']['poetry']['version']
-
 else:
-
     __version__ = pkg_resources.get_distribution('botanalytics').version
+
 
 load_dotenv()
 
@@ -169,7 +167,7 @@ class Base:
 
         request_retry_limit = (default_request_retry_limit if os.getenv('BA_REQUEST_RETRY_LIMIT')
                                                               is None else int(os.getenv('BA_REQUEST_RETRY_LIMIT'))) \
-            if 'request_retry_limit' not in kwargs else kwargs['request_retry_limit']
+            if 'request_retry_limit' not in kwargs else int(kwargs['request_retry_limit'])
 
         request_timeout = (default_request_timeout if os.getenv('BA_REQUEST_TIMEOUT')
                                                       is None else int(os.getenv('BA_REQUEST_TIMEOUT'))) \
@@ -274,7 +272,7 @@ class Base:
 
         headers['X-Botanalytics-Client-Version'] = __version__
 
-        self.http.post('/messages',
+        self.http.post('messages',
                        data=request_json,
                        headers=headers,
                        allow_redirects=False,
@@ -324,11 +322,12 @@ class Base:
 
             try:
 
+
                 data = response.json()
 
                 # Log request ID if available
                 if 'request_id' in data:
-                    logger.debug('Message(s) successfully sent with the request ID \'%s\'.' % data.request_id)
+                    logger.debug('Message(s) successfully sent with the request ID \'%s\'.' % data['request_id'])
 
             except:
 
