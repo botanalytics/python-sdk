@@ -66,7 +66,7 @@ regex = re.compile(
 pattern = re.compile(regex)
 
 default_log_level = 'INFO'
-default_base_url = 'https://api.botanalytics.co'
+default_base_url = 'https://api.botanalytics.co/v2/'
 default_request_timeout = 30000
 default_request_retry_limit = 10
 
