@@ -6,4 +6,4 @@
 
 ## Documentation
 
-Please follow up the steps in the [Getting Started](https://docs.beta.botanalytics.co/docs/integration/sdks/python/getting-started){:target="_blank"} section of Python SDK documentation.
+Please follow up the steps in the [Getting Started](https://docs.beta.botanalytics.co/docs/integration/sdks/python/getting-started) section of Python SDK documentation.
