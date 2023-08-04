@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ["py37", "py38", "py39", "py310"]
+target-version = ["py36", "py37", "py38", "py39", "py310"]
 exclude = "((.eggs | .git | .pytest_cache | build | dist))"
 
 
@@ -16,7 +16,7 @@ authors = [ "Botanalytics, Inc. <hello@botanalytics.co>",]
 maintainers = [ "Enis Gayretli <enis@botanalytics.co>", "Deniz Acay <deniz@botanalytics.co>" ]
 homepage = "https://botanalytics.co"
 repository = "https://github.com/botanalytics/python-sdk"
-documentation = "https://beta.botanalytics.co/docs/integration/sdks/python/getting-started"
+documentation = "https://docs.beta.botanalytics.co/docs/integration/sdks/python/getting-started"
 classifiers = [ "Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: MIT :: Apache Software License", "Topic :: Software Development :: Libraries", ]
 keywords = [ "conversational-analytics", "conversational-agents", "conversational-ai", "bots", "chatbot", "chatbot", "botanalytics", "analytics", "rasa", "universal", ]
 include = [ "LICENSE.txt", "README.md",]
@@ -25,8 +25,8 @@ license = "MIT"
 
 
 [tool.poetry.dependencies]
-python = ">=3.7,<3.10"
-requests = "^2.28.0"
+python = ">=3.6,<3.10"
+requests = "^2.27.1"
 requests-toolbelt = "^0.9.1"
 python-dotenv = "^0.20.0"
 loguru = "^0.6.0"

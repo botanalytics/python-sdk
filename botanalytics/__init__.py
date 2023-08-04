@@ -66,7 +66,7 @@ regex = re.compile(
 pattern = re.compile(regex)
 
 default_log_level = 'INFO'
-default_base_url = 'https://api.botanalytics.co/v2/'
+default_base_url = 'https://api.beta.botanalytics.co/v2/'
 default_request_timeout = 30000
 default_request_retry_limit = 10
 
@@ -176,7 +176,7 @@ class Base:
         # Configure http client
         retries = CallbackRetry(total=request_retry_limit,
                                 backoff_factor=1,
-                                allowed_methods=["POST"],
+                                method_whitelist=["POST"],
                                 status_forcelist=[429, 500, 502, 503, 504],
                                 callback=partial(self.retry_callback, request_retry_limit))
         adapter = TimeoutHTTPAdapter(max_retries=retries, timeout=request_timeout)
